@@ -7,6 +7,7 @@ function mensaje(text,tiempo){
 	document.body.appendChild(div);
 	setTimeout(function(){
 		document.querySelectorAll(".mensaje p")[0].style.right=0;
+	
 	},100)
 	setTimeout(function(){
 		document.querySelectorAll(".mensaje p")[0].style.right="-100%";
@@ -20,7 +21,7 @@ var head = new Vue({
 	methods:{
 		mostrarMensaje: function(e){
 			e.preventDefault();
-			mensaje("esta es mi segundo intento");
+			mensaje("esta es mi segundo intento",3000);
 		}
 	}
 })
