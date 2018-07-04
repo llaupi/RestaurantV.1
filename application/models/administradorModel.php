@@ -37,6 +37,16 @@
 		return $this->db->delete("producto");
 	}
 
+	//join de categoria con producto
+
+	public function unirCategoria()
+	{
+		$this->db->select("producto.codigo,producto.nombre,producto.precio,producto.stock,producto.descripcion,categoria.nombre as 'categoria'");
+		$this->db->from("producto");
+		$this->db->join("categoria","producto.idCategoria = categoria.id");
+		return $this->db->get()->result();
+	}
+
 
 
 

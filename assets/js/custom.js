@@ -1,20 +1,23 @@
 function mensaje(text, tiempo) {
-	var div = document.createElement("div");
-	div.classList.add("mensaje");
-	var p = document.createElement("p");
-	p.innerText = text;
-	div.appendChild(p);
-	document.body.appendChild(div);
-	setTimeout(function () {
-		document.querySelectorAll(".mensaje p")[0].style.right = 0;
+	var largo = document.querySelectorAll(".mensaje p").length;
+	if (largo == 0) {
+		var div = document.createElement("div");
+		div.classList.add("mensaje");
+		var p = document.createElement("p");
+		p.innerText = text;
+		div.appendChild(p);
+		document.body.appendChild(div);
+		setTimeout(function () {
+			document.querySelectorAll(".mensaje p")[0].style.right = 0;
+		}, 100)
+		setTimeout(function () {
+			document.querySelectorAll(".mensaje p")[0].style.right = "-100%";
+		}, tiempo)
+		setTimeout(function () {
+			document.querySelectorAll(".mensaje p")[0].remove();
+		}, tiempo + 500)
+	}
 
-	}, 100)
-	setTimeout(function () {
-		document.querySelectorAll(".mensaje p")[0].style.right = "-100%";
-	}, tiempo)
-	setTimeout(function () {
-		document.querySelectorAll(".mensaje p")[0].remove();
-	}, tiempo + 1000)
 }
 var head = new Vue({
 	el: "#head",
@@ -22,7 +25,7 @@ var head = new Vue({
 		carrito: {
 			total: 0,
 			productos: []
-		},	
+		},
 	},
 	methods: {
 		mostrarMensaje: function (e) {
@@ -49,8 +52,21 @@ var head = new Vue({
 	}
 });
 var listaCarro = new Vue({
-	el:"#listaCarro",
-		
+	el: "#listaCarro",
+	methods: {
+		eliminardelcarro: function (e, codigo, precio) {
+			pos = 0;
+			head.carrito.productos.forEach(p => {
+
+				if (p.codigo == codigo) {
+					head.carrito.productos.splice(pos, 1);
+					head.carrito.total -= parseInt(precio);
+				}
+				pos = +1;
+			});
+			sessionStorage.setItem("carrito", JSON.stringify(head.carrito));
+		}
+	}
 })
 
 var index = new Vue({
@@ -81,7 +97,7 @@ var index = new Vue({
 
 							break;
 						case "error":
-							alert("no existe ese usuario");
+							mensaje("no existe el usuario", 3000);
 							break;
 
 						default:
@@ -168,12 +184,12 @@ var registrarPerson = new Vue({
 					this.$http.post(index.url + "registrarPersonal", data).then(function (r) {
 						var result = r.body;
 						console.log(result.msg);
-						alert(result.msg);
+						mensaje(result.msg);
 
 					});
 				}
 			} else {
-				alert("la confirmacion de la clave no es correcta");
+				mensaje("las contraseñas no coinciden", 3000);
 			}
 
 
@@ -216,8 +232,12 @@ var Productosadd = new Vue({
 			if (input.target.files && input.target.files[0]) {
 				var reader = new FileReader();
 				reader.onload = function (e) {
+					if (reader.result.search("image") != -1) {
+						Productosadd.imagenBase64 = e.target.result;
+					} else {
+						mensaje("sube una foto guapo", 3000);
+					}
 
-					Productosadd.imagenBase64 = e.target.result;
 				}
 				reader.readAsDataURL(input.target.files[0]);
 			}
@@ -251,9 +271,10 @@ var buscarProducto = new Vue({
 			})
 		},
 		cargarproductos: function () {
-			this.$http.get(index.url + "getProducto").then(function (r) {
+			this.$http.get(index.url + "unirCategoria").then(function (r) {
 				var result = r.body;
 				this.producto = result;
+				console.log(result);
 
 
 			});

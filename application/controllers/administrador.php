@@ -108,6 +108,11 @@ class administrador extends CI_Controller {
         echo json_encode(array("msg"=>"producto eliminado"));
      }
 
+     public function unirCategoria()
+     {
+         echo json_encode($this->administradorModel->unirCategoria());
+     }
+
 
 
 

@@ -71,6 +71,7 @@ $route['moduloAddGetProducto'] = 'administrador/moduloAddGetProducto';
 $route['getProducto'] = 'administrador/getProducto';
 $route['deleteProduct'] = 'administrador/deleteProduct';
 $route['modulolistaCarro'] = 'administrador/modulolistaCarro';
+$route['unirCategoria'] = 'administrador/unirCategoria';
 
 
 

@@ -7,6 +7,7 @@
               <td>nombre</td>
               <td>Descripcion</td>
               <td>precio:</td>
+              <td>Accion</td>
             </tr>
           </thead>
           <tbody >
@@ -14,6 +15,7 @@
               <td>{{c.nombre}}</td>
               <td>{{c.descripcion}}</td>
               <td>{{c.precio}}</td>
+              <td><input type="button" @click="eliminardelcarro($event,c.codigo,c.precio)" class="btneliminarCarro btn" value="eliminar"></td>
             </tr>
           </tbody>
         </table>

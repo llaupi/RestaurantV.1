@@ -117,3 +117,8 @@ main {
 	background-color: rgb(172, 5, 5);
 	color: #fff;
 }
+.btneliminarCarro{
+	background-color: rgb(243, 28, 28);
+	color: #fff;
+	border-radius: 10px;
+}

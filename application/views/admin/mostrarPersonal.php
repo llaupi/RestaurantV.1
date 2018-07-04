@@ -19,8 +19,8 @@
 						<th style="width: 36px;"></th>
 					</tr>
 				</thead>
-				<tbody v-for="p in arreglo" >
-					<tr v-if="p.tipo=='1'">
+				<tbody  >
+					<tr v-for="p in arreglo">
 						<td>{{p.rut}}</td>
 						<td>{{p.nombre}}</td>
 						<td>{{p.apellido}}</td>
