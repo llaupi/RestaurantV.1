@@ -1,30 +1,58 @@
-function mensaje(text,tiempo){
+function mensaje(text, tiempo) {
 	var div = document.createElement("div");
 	div.classList.add("mensaje");
 	var p = document.createElement("p");
-	p.innerText= text;
+	p.innerText = text;
 	div.appendChild(p);
 	document.body.appendChild(div);
-	setTimeout(function(){
-		document.querySelectorAll(".mensaje p")[0].style.right=0;
-	
-	},100)
-	setTimeout(function(){
-		document.querySelectorAll(".mensaje p")[0].style.right="-100%";
-	},tiempo)
-	setTimeout(function(){
+	setTimeout(function () {
+		document.querySelectorAll(".mensaje p")[0].style.right = 0;
+
+	}, 100)
+	setTimeout(function () {
+		document.querySelectorAll(".mensaje p")[0].style.right = "-100%";
+	}, tiempo)
+	setTimeout(function () {
 		document.querySelectorAll(".mensaje p")[0].remove();
-	},tiempo+1000)
+	}, tiempo + 1000)
 }
 var head = new Vue({
 	el: "#head",
-	methods:{
-		mostrarMensaje: function(e){
+	data: {
+		carrito: {
+			total: 0,
+			productos: []
+		},	
+	},
+	methods: {
+		mostrarMensaje: function (e) {
 			e.preventDefault();
-			mensaje("esta es mi segundo intento",3000);
+			mensaje("esta es mi segundo intento", 3000);
+		},
+		agregarCarrito: function (codigo, nombre, precio, descripcion) {
+			data = {
+				codigo: codigo,
+				nombre: nombre,
+				precio: precio,
+				descripcion: descripcion
+			}
+			this.carrito.total += parseInt(precio);
+			this.carrito.productos.push(data);
+			sessionStorage.setItem("carrito", JSON.stringify(this.carrito));
+
+		}
+	},
+	mounted: function () {
+		if (sessionStorage.getItem("carrito") != null) {
+			this.carrito = JSON.parse(sessionStorage.getItem("carrito"));
 		}
 	}
+});
+var listaCarro = new Vue({
+	el:"#listaCarro",
+		
 })
+
 var index = new Vue({
 	el: "#iniciarSesion",
 	data: {
@@ -125,8 +153,8 @@ var registrarPerson = new Vue({
 			tipo = formulario.comboRegistrar.value;
 			if (clave == confirmarclave) {
 				if (rut == "" || nombre == "" || apellido == "" || email == "" || clave == "" || telefono == "") {
-				
-					mensaje("completalo, mala persona",3000);
+
+					mensaje("completalo, mala persona", 3000);
 				} else {
 					data = {
 						rut: rut,
@@ -157,7 +185,7 @@ var Productosadd = new Vue({
 	el: "#agregarProducto",
 	data: {
 		categoria: [],
-		imagenBase64:""
+		imagenBase64: ""
 	},
 	methods: {
 		addunProducto: function (e) {
@@ -184,15 +212,15 @@ var Productosadd = new Vue({
 
 			})
 		},
-		cambiarImagen : function(input){
+		cambiarImagen: function (input) {
 			if (input.target.files && input.target.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-				
+				var reader = new FileReader();
+				reader.onload = function (e) {
+
 					Productosadd.imagenBase64 = e.target.result;
-        }
-        reader.readAsDataURL(input.target.files[0]);
-      }
+				}
+				reader.readAsDataURL(input.target.files[0]);
+			}
 		}
 	},
 	mounted: function () {
@@ -219,18 +247,18 @@ var buscarProducto = new Vue({
 			this.$http.post(index.url + "deleteProduct", data).then(function (r) {
 				var result = r.body;
 				this.cargarproductos();
-			
+
 			})
+		},
+		cargarproductos: function () {
+			this.$http.get(index.url + "getProducto").then(function (r) {
+				var result = r.body;
+				this.producto = result;
+
+
+			});
+		}
 	},
-	cargarproductos: function () {
-		this.$http.get(index.url + "getProducto").then(function (r) {
-			var result = r.body;
-			this.producto = result;
-
-
-		});
-	}
-},
 	mounted: function () {
 		this.cargarproductos();
 
@@ -255,22 +283,20 @@ var productoimg = new Vue({
 			this.$http.post(index.url + "deleteProduct", data).then(function (r) {
 				var result = r.body;
 				this.cargarproductos();
-			
+
 			})
+		},
+		cargarproductos: function () {
+			this.$http.get(index.url + "getProducto").then(function (r) {
+				var result = r.body;
+				this.producto = result;
+
+
+			});
+		}
 	},
-	cargarproductos: function () {
-		this.$http.get(index.url + "getProducto").then(function (r) {
-			var result = r.body;
-			this.producto = result;
-
-
-		});
-	}
-},
 	mounted: function () {
 		this.cargarproductos();
 
 	}
 });
-
-

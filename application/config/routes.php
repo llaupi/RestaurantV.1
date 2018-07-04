@@ -70,6 +70,7 @@ $route['deletePersonal'] = 'administrador/deletePersonal';
 $route['moduloAddGetProducto'] = 'administrador/moduloAddGetProducto';
 $route['getProducto'] = 'administrador/getProducto';
 $route['deleteProduct'] = 'administrador/deleteProduct';
+$route['modulolistaCarro'] = 'administrador/modulolistaCarro';
 
 
 

@@ -42,6 +42,12 @@ class administrador extends CI_Controller {
         $this->load->view("admin/getProducto");
         $this->load->view("templateAd/footer");
     }
+    public function modulolistaCarro()
+    {
+        $this->load->view("templateAd/header");
+        $this->load->view("admin/listaCarro");
+        $this->load->view("templateAd/footer");
+    }
 
     // mostrar
     public function getCategoria()

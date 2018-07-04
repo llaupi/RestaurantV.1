@@ -39,7 +39,7 @@
         <img :src="p.imagen"> 
       <p>{{p.nombre}} ({{p.Descripcion}})</p>
       <p>{{p.precio}}</p>
-        <input type="submit" value="agregar" id="btnCarro" class="btn btn-ld ">
+        <input type="button" @click="head.agregarCarrito(p.codigo,p.nombre,p.precio,p.Descripcion)" value="agregar" id="btnCarro" class="btn btn-ld ">
       </div>
 
 		</div>

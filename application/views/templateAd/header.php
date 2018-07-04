@@ -92,8 +92,22 @@
 								<?php echo "sñor(a) ", $user[0]->apellido;?>
 							</a>
 						</li>
-						<li>
-							<a href="#" hidden>carrito</a>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Carro
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li v-for="p in carrito.productos">
+									<a href="#">{{p.nombre}}</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="#">total: ${{carrito.total}}</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li class="btnpagarcontainer"><button onclick="window.location='./modulolistaCarro'" class="btnpagar btn center">pagar</button></li>
+								
+							</ul>
 						</li>
 						<li>
 							<a href="<?php base_url();?>logout">Salir</a>

@@ -26,8 +26,9 @@ main {
   footer{
 	  background-color:rgb(77, 197, 191) 
   }
-.navbar li:hover{
-    background: rgb(77, 197, 191);
+
+.nav>li>a:hover,.nav>li>a:focus{
+	background-color: rgb(70, 175, 170) !important;
 }
 
 #navAdm{
@@ -98,4 +99,21 @@ main {
 	border-radius: 15px;
 	box-shadow: 0 0 2em .2em black;
 	transition: all .5s;
+}
+.btnpagarcontainer{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+.btnpagar {
+	width: 50%;
+	background-color: rgb(218, 23, 23);
+	color: #fff;
+	border-radius: 10px;
+	margin-right: 10px;
+}
+.btnpagar :hover
+.btnpagar :focus{
+	background-color: rgb(172, 5, 5);
+	color: #fff;
 }
