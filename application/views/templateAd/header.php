@@ -10,7 +10,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Bootstrap 101 Template</title>
+		<title>NiceDay</title>
 
 		<!-- Bootstrap -->
 		<link href="<?php base_url();?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -87,10 +87,24 @@
 						<button type="submit"  class="btn btn-default">buscar</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="#">
-								<?php echo "sñor(a) ", $user[0]->apellido;?>
+					<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<?php echo "sñor(a) ", $user[0]->apellido;?>
+								<span class="caret"></span>
 							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="<?php base_url()?>redirectRegistrar">Registrar</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="<?php base_url();?>moduloPersonal">personal</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="#">One more separated link</a>
+								</li>
+							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Carro

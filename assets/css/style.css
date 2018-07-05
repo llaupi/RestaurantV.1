@@ -7,6 +7,9 @@ body{
 	position: relative;
 	overflow-x: hidden;
 }
+textarea{
+	resize: none;
+}
 .navbar {
 	background: rgb(77, 197, 191);
 	
@@ -36,7 +39,7 @@ main {
 }
 
 .btn-login {
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(98, 188, 236);
 	outline: none;
 	color: rgb(0, 0, 0);
 	font-size: 14px;
@@ -90,7 +93,8 @@ main {
 	z-index: 5000;
 }
 .mensaje p{
-	background:rgb(36, 201, 124);
+	/*background:rgb(36, 201, 124);*/
+	background:radial-gradient(rgb(36, 201, 124),rgb(9, 182, 130));
 	color: #fff;
 	width: 35%;
 	position: absolute;
@@ -122,3 +126,17 @@ main {
 	color: #fff;
 	border-radius: 10px;
 }
+.btn-eliminarModal{
+	background-color: red;
+	color: #fff;
+}
+.btn-eliminarModal:hover,.btn-eliminarModal:focus{
+	color: #fff;
+	background-color: darkred;
+}
+.close{
+	position:relative;
+	bottom: 40px;
+	
+}
+

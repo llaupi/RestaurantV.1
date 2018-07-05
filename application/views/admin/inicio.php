@@ -36,7 +36,7 @@
 	<div class="row">
 		<div class="col-md-4" v-for="p in producto">
 			<div class="img-thumbnail text-center"  >
-        <img :src="p.imagen"> 
+        <img :src="p.imagen" class="img-responsive" > 
       <p>{{p.nombre}} ({{p.Descripcion}})</p>
       <p>{{p.precio}}</p>
         <input type="button" @click="head.agregarCarrito(p.codigo,p.nombre,p.precio,p.Descripcion)" value="agregar" id="btnCarro" class="btn btn-ld ">

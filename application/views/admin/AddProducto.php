@@ -28,6 +28,8 @@
 								<p id="characterLeft" class="help-block "></p>
 							</span>
 						</div>
+						
+
 						<input type="file" @change="cambiarImagen($event)" name="imagen">
 
 						<input type="submit" class="btn btn-primary pull-right" value="agregar"></input>

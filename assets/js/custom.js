@@ -223,7 +223,7 @@ var Productosadd = new Vue({
 			};
 			this.$http.post(index.url + "agregarProducto", data).then(function (r) {
 				var result = r.body;
-				$.notify(result);
+				mensaje(result.msg,2000);
 				form.reset();
 
 			})
@@ -259,22 +259,26 @@ var buscarProducto = new Vue({
 		producto: []
 	},
 	methods: {
-		btneliminarPro: function (e, codigo) {
+		btneliminarPro: function (e) {
 			e.preventDefault();
 			data = {
-				codigo: codigo
+				codigo:e.target.producto
 			}
 			this.$http.post(index.url + "deleteProduct", data).then(function (r) {
 				var result = r.body;
+				$('#conEliminar').modal('hide');
 				this.cargarproductos();
 
 			})
+		},
+		abrirModalEliminar:function(e,codigo){
+			document.getElementById("modalEliminar").producto=codigo;
 		},
 		cargarproductos: function () {
 			this.$http.get(index.url + "unirCategoria").then(function (r) {
 				var result = r.body;
 				this.producto = result;
-				console.log(result);
+				
 
 
 			});
