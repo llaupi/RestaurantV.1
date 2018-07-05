@@ -184,7 +184,7 @@ var registrarPerson = new Vue({
 					this.$http.post(index.url + "registrarPersonal", data).then(function (r) {
 						var result = r.body;
 						console.log(result.msg);
-						mensaje(result.msg);
+						mensaje(result.msg, 2000);
 
 					});
 				}
@@ -223,7 +223,7 @@ var Productosadd = new Vue({
 			};
 			this.$http.post(index.url + "agregarProducto", data).then(function (r) {
 				var result = r.body;
-				mensaje(result.msg,2000);
+				mensaje(result.msg, 2000);
 				form.reset();
 
 			})
@@ -256,13 +256,16 @@ var buscarProducto = new Vue({
 
 	el: "#buscarProducto",
 	data: {
-		producto: []
+		producto: [],
+		categoria: [],
+		codigo: "",
+		imagenBase64: ""
 	},
 	methods: {
 		btneliminarPro: function (e) {
 			e.preventDefault();
 			data = {
-				codigo:e.target.producto
+				codigo: e.target.producto
 			}
 			this.$http.post(index.url + "deleteProduct", data).then(function (r) {
 				var result = r.body;
@@ -271,22 +274,82 @@ var buscarProducto = new Vue({
 
 			})
 		},
-		abrirModalEliminar:function(e,codigo){
-			document.getElementById("modalEliminar").producto=codigo;
+
+		abrirModalEliminar: function (e, codigo) {
+			document.getElementById("modalEliminar").producto = codigo;
+		},
+		abrirModalEditar: function (e, codigo, nombre, precio, stock, descripcion, categoria) {
+
+			var form = document.getElementById("editarProducto");
+			form.nombreupProducto.value = nombre;
+			form.precioupProducto.value = precio;
+			form.stockupProducto.value = stock;
+			form.descupProducto.value = descripcion;
+			var cate= document.getElementById("categoriaEditar");
+			var array = [].slice.call([cate.children][0]);
+			var p = array.indexOf(array.filter(opt => opt.text == categoria)[0]);
+			cate.selectedIndex=p;
+			this.codigo = codigo;
+		},
+		btneditarPro: function (e) {
+			e.preventDefault();
+			var formu = document.getElementById("editarProducto");
+
+			nombre = formu.nombreupProducto.value;
+			precio = formu.precioupProducto.value;
+			stock = formu.stockupProducto.value;
+			descripcion = formu.descupProducto.value;
+			categoria = formu.comboupProducto.value;
+
+			data = {
+				codigo: this.codigo,
+				nombre: nombre,
+				precio: precio,
+				stock: stock,
+				descripcion: descripcion,
+				categoria: categoria,
+				imagen: this.imagenBase64
+			}
+			this.$http.post(index.url + "actualizarProducto", data).then(function (r) {
+				var result = r.body;
+				this.cargarproductos();
+				mensaje(result.msg, 2000);
+				$('#conEditar').modal('hide');
+			})
 		},
 		cargarproductos: function () {
 			this.$http.get(index.url + "unirCategoria").then(function (r) {
 				var result = r.body;
 				this.producto = result;
-				
 
 
+
+			});
+		},
+		cambiarImagen: function (input) {
+			if (input.target.files && input.target.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					if (reader.result.search("image") != -1) {
+						buscarProducto.imagenBase64 = e.target.result;
+					} else {
+						mensaje("sube una foto guapo", 3000);
+					}
+
+				}
+				reader.readAsDataURL(input.target.files[0]);
+			}
+		},
+		cargarCategoria: function () {
+			this.$http.get(index.url + "getCategoria").then(function (r) {
+				var result = r.body;
+				this.categoria = result;
 			});
 		}
 	},
 	mounted: function () {
 		this.cargarproductos();
-
+		this.cargarCategoria();
 	}
 });
 

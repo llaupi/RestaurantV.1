@@ -48,6 +48,12 @@ class administrador extends CI_Controller {
         $this->load->view("admin/listaCarro");
         $this->load->view("templateAd/footer");
     }
+    public function modulocategoria()
+    {
+        $this->load->view("templateAd/header");
+        $this->load->view("admin/categoria");
+        $this->load->view("templateAd/footer");
+    }
 
     // mostrar
     public function getCategoria()
@@ -111,6 +117,19 @@ class administrador extends CI_Controller {
      public function unirCategoria()
      {
          echo json_encode($this->administradorModel->unirCategoria());
+     }
+
+     public function actualizarProducto()
+     {
+         $codigo = $this->request->codigo;
+         $precio = $this->request->precio;
+         $nombre = $this->request->nombre;
+         $stock = $this->request->stock;
+         $descripcion = $this->request->descripcion;
+         $categoria = $this->request->categoria;
+         $imagen = $this->request->imagen;
+         $this->administradorModel->actualizarProducto($codigo,$nombre, $precio, $stock, $descripcion, $categoria, $imagen);
+         echo json_encode(array("msg"=>"se actualizo"));
      }
 
 

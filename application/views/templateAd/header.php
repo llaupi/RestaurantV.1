@@ -102,7 +102,7 @@
 								</li>
 								<li role="separator" class="divider"></li>
 								<li>
-									<a href="#">One more separated link</a>
+									<a href="<?php base_url();?>modulocategoria">Categoria</a>
 								</li>
 							</ul>
 						</li>

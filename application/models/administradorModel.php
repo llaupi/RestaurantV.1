@@ -37,6 +37,14 @@
 		return $this->db->delete("producto");
 	}
 
+	public function actualizarProducto($codigo,$nombre, $precio, $stock, $descripcion, $categoria, $imagen)
+	{
+		$data=array("nombre"=>$nombre, "precio"=>$precio, "stock"=>$stock, "Descripcion"=>$descripcion,
+		 "idCategoria"=>$categoria, "imagen"=>$imagen);
+		 $this->db->where("codigo",$codigo);
+			return $this->db->update("producto",$data);
+	}
+
 	//join de categoria con producto
 
 	public function unirCategoria()
