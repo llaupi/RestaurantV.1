@@ -24,6 +24,12 @@
 		$data=array("rut"=> $rut, "nombre"=>$nombre, "apellido"=>$apellido, "correo"=>$correo, "clave"=>$clave, "telefono"=>$telefono, "tipo"=>$tipo);
 		return $this->db->insert("personal", $data);
 	}
+	public function editarPersonal($rut,$nombre,$apellido,$correo,$telefono,$tipo)
+	{
+		$data=array("rut"=>$rut,"nombre"=>$nombre,"apellido","correo"=>$correo,"telefono"=>$telefono,"tipo"=>$tipo);
+		$this->db->where("rut",$rut);
+		return $this->db->insert("personal",$data);
+	}
 
 	public function deletePersonal($rut)
 	{
@@ -44,6 +50,22 @@
 		 $this->db->where("codigo",$codigo);
 			return $this->db->update("producto",$data);
 	}
+	public function addCategoria($nombre)
+	{
+		$data= array("nombre"=>$nombre);
+		return $this->db->insert("categoria",$data);
+	}
+	public function deleteCategoria($id)
+	{
+		$this->db->where("id",$id);
+		return $this->db->delete("categoria");
+	}
+	public function updateCategoria($id,$nombre)
+	{
+		$data=array("nombre"=>$nombre);
+		$this->db->where("id",$id);
+		return $this->db->update("categoria",$data);
+	}
 
 	//join de categoria con producto
 
@@ -54,6 +76,31 @@
 		$this->db->join("categoria","producto.idCategoria = categoria.id");
 		return $this->db->get()->result();
 	}
+
+	// capturar orden
+	public function addOrden($idmesa,$fecha,$precio,$cliente)
+	{
+		$data = array("idMesa"=>$idmesa,"fecha"=>$fecha,"precio"=>$precio,
+		"rutCliente"=>$cliente);
+		 $this->db->insert("orden",$data);
+	$id = $this->db->query("select max(idorden) as 'ultima' from orden")->result();
+		return $id;
+	}
+	public function detalleOrden($ultimaID,$producto)
+	{
+		$data= array("idOrden"=>$ultimaID,"idCodigo"=>$producto);
+		$this->db->insert("detalleorden",$data);
+	}
+	//	idorden idMesa fecha precio rutCliente
+	public function pedido()
+	{
+		$this->db->select("*");
+		$this->db->from("orden");
+		$this->db->join("detalleorden","orden.idorden = detalleorden.idOrden");
+		$this->db->join("producto","producto.codigo = detalleorden.idCodigo");
+		return $this->db->get()->result();
+	}
+
 
 
 

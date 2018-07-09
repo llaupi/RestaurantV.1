@@ -6,8 +6,8 @@
     </div>
     
     <br>
-		<div class="well">
-			<table class="table" @submit="btneliminarPro($event)">
+		<div class="">
+			<table class="table table-striped custab" @submit="btneliminarPro($event)">
 				<thead>
 					<tr>
 						<th>codigo</th>
@@ -45,9 +45,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-     
       <div class="modal-footer">
-        <button type="submit" @click="btneliminarPro($event)" id="modalEliminar" class="btn-eliminarModal btn " producto="" >Eliminar</button>
+        <button type="submit" @click="btneliminarPro($event)" id="modalEliminard" class="btn-eliminar btn " producto="" >Eliminar</button>
         <button type="button"  data-dismiss="modal" class="btn btn-secondary">Cancelar</button>
       </div>
     </div>

@@ -52,10 +52,10 @@ class Welcome extends CI_Controller {
 			}
 			elseif($arrayuser[0]->tipo ==1){
 				echo json_encode(array("msg"=> "vendedor"));
+				$this->session->set_userdata("vendedor",$arrayuser);
 			}elseif ($arrayuser[0]->tipo==2) {
-				echo json_encode(array("msg"=> "cocinero"));
-			}elseif ($arrayuser[0]->tipo ==3) {
 				echo json_encode(array("msg"=> "cliente"));
+				$this->session->set_userdata("cliente",$arrayuser);
 			}
 		}else{
 			echo json_encode(array("msg"=> "error"));

@@ -62,6 +62,7 @@ $route['personal'] = 'welcome/personal';
 $route['redirectRegistrar'] = 'administrador/redirectRegistrar';
 $route['registrarPersonal'] = 'administrador/registrarPersonal';
 $route['moduloPersonal'] = 'administrador/moduloPersonal';
+$route['editarPersonal'] = 'administrador/editarPersonal';
 $route['moduloAddCategoria'] = 'administrador/moduloAddCategoria';
 $route['moduloAddProducto'] = 'administrador/moduloAddProducto';
 $route['getCategoria'] = 'administrador/getCategoria';
@@ -74,9 +75,20 @@ $route['modulolistaCarro'] = 'administrador/modulolistaCarro';
 $route['unirCategoria'] = 'administrador/unirCategoria';
 $route['actualizarProducto'] = 'administrador/actualizarProducto';
 $route['modulocategoria'] = 'administrador/modulocategoria';
+$route['modulopedidos'] = 'administrador/modulopedidos';
+
+$route['addCategoria'] = 'administrador/addCategoria';
+$route['deleteCategoria'] = 'administrador/deleteCategoria';
+$route['updateCategoria'] = 'administrador/updateCategoria';
 
 
+// rutas de orden  y compra
+$route['addOrden'] = 'administrador/addOrden';
+$route['pedido'] = 'administrador/pedido';
 
+// rutas clientes
+$route['inicioCliente'] = 'Cliente/inicioCliente';
+$route['listacarroCliente'] = 'Cliente/listacarroCliente';
 
 $route['logout'] = 'welcome/logout';
 

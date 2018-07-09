@@ -1,5 +1,5 @@
-<div class="row"  >
-	<div class="container" id="agregarProducto">
+<div class=" row"  >
+	<div class=" container " id="agregarProducto">
 		<div class="col-md-5">
 			<div class="form-area">
 				<form method="post" @submit="addunProducto($event)" role="form">
@@ -8,6 +8,7 @@
 					<div class="form-group">
 						<input type="text" class="form-control" id="nombreAddProducto" name="nombreAddProducto" placeholder="nombre" required>
 					</div>
+					
 					<div class="form-group">
 						<input type="number" class="form-control" id="precioAddProducto" name="precioAddProducto" placeholder="precio:" required>
 					</div>
@@ -32,7 +33,7 @@
 
 						<input type="file" @change="cambiarImagen($event)" name="imagen">
 
-						<input type="submit" class="btn btn-primary pull-right" value="agregar"></input>
+						<input type="submit" class="btn-agregar btn pull-right" value="agregar"></input>
 				</form>
 				</div>
 			</div>

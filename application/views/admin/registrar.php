@@ -38,7 +38,7 @@
 						<select class="form-control" name="comboRegistrar">
 							<option value="0">administrador</option>
 							<option value="1">vendedor</option>
-							<option value="2">cocinero</option>
+							
 
 						</select>
 					</div>

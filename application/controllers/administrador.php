@@ -54,11 +54,35 @@ class administrador extends CI_Controller {
         $this->load->view("admin/categoria");
         $this->load->view("templateAd/footer");
     }
-
+    public function modulopedidos()
+    {
+        $this->load->view("templateAd/header");
+        $this->load->view("admin/pedidos");
+        $this->load->view("templateAd/footer");
+    }
     // mostrar
     public function getCategoria()
     {
         echo json_encode($this->administradorModel->getCategoria());
+        }
+        public function addCategoria()
+        {
+            $nombre = $this->request->nombre;
+            $this->administradorModel->addCategoria($nombre);
+            echo json_encode(array("msg"=>"categoria agregada :)"));
+        }
+        public function deleteCategoria()
+        {
+            $id = $this->request->id;
+            $this->administradorModel->deleteCategoria($id);
+            echo json_encode(array("msg"=>"eliminado"));
+        }
+        public function updateCategoria()
+        {
+            $id = $this->request->id;
+            $nombre = $this->request->nombre;
+            $this->administradorModel->updateCategoria($id,$nombre);
+            echo json_encode(array("msg"=>"actualizado"));
         }
 
         public function getProducto()
@@ -99,6 +123,17 @@ class administrador extends CI_Controller {
          }
          
      }
+     public function  editarPersonal()
+     {
+         $rut = $this->request->rut;
+         $nombre = $this->request->nombre;
+         $apellido = $this->request->apellido;
+         $correo = $this->request->correo;
+         $telefono = $this->request->telefono;
+         $tipo = $this->request->tipo;
+         $this->administradorModel->editarPersonal($rut,$nombre,$apellido,$correo,$telefono,$tipo);
+         echo json_encode(array("msg"=>"actualizado con exito"));
+     }
 
      public function deletePersonal()
      {
@@ -133,6 +168,26 @@ class administrador extends CI_Controller {
      }
 
 
+     public function addOrden()
+     {
+         $idmesa = $this->request->idmesa;
+         $fecha = date("Y-m-d H:i:s");
+         $precio = $this->request->total;
+         $cliente = $this->request->cliente;
+         $productos = $this->request->productos;
+          $ultimaId = $this->administradorModel->addOrden($idmesa,$fecha,$precio,$cliente)[0]->ultima;
+        
+       foreach ($productos as $prod) {
+        $this->administradorModel->detalleOrden($ultimaId,$prod->codigo);
+       }
+       echo json_encode(array("msg"=>"ay"));
+        
+     }
+
+     public function pedido()
+     {
+        echo json_encode($this->administradorModel->pedido());
+     }
 
 
 

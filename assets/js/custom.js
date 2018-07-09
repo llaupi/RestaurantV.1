@@ -57,12 +57,11 @@ var listaCarro = new Vue({
 		eliminardelcarro: function (e, codigo, precio) {
 			pos = 0;
 			head.carrito.productos.forEach(p => {
-
 				if (p.codigo == codigo) {
 					head.carrito.productos.splice(pos, 1);
 					head.carrito.total -= parseInt(precio);
 				}
-				pos = +1;
+				pos++;
 			});
 			sessionStorage.setItem("carrito", JSON.stringify(head.carrito));
 		}
@@ -96,6 +95,9 @@ var index = new Vue({
 							window.location = index.url + "inicioAdmin";
 
 							break;
+							case"cliente":
+							window.location = index.url +"inicioCliente";
+							break;
 						case "error":
 							mensaje("no existe el usuario", 3000);
 							break;
@@ -116,23 +118,60 @@ var inicioAdmin = new Vue({
 	//mostrar datos de un arreglo a una pagina
 	data: {
 		arreglo: [],
-		tipo: ["admin", "vendedor", "cocinero", "cliente"]
+		tipo: ["admin", "vendedor", "cliente"]
 	},
 	methods: {
-		btneliminarPe: function (e, rut) {
-			e.preventDefault();
 
+		modalEliminarPe:function(e,rut){
+			document.getElementById("modalEliminarPer").rut = rut;
+		},
+		btneliminarPe: function (e) {
+			e.preventDefault();
 			data = {
-				rut: rut
+				rut: e.target.rut
 			}
 			this.$http.post(index.url + "deletePersonal", data).then(function (r) {
 				var result = r.body;
-				alert(result.msg);
+				$('#conEliminarPer').modal('hide');
+				mensaje(result.msg,2000);
 				this.cargarPersonal();
 			})
 
-			//	this.arreglo[0].nombre = "felipe";
-			// this.arreglo.push({nombre:"marcos",apellido:"caiman",tipo:2});
+		},
+		modalEditarpe:function(e,rut,nombre,apellido,correo,telefono,tipo){
+			var form = document.getElementById("editarpersonal");
+			form.rutEditPersonal.value = rut;
+			form.nombreEditPersonal.value = nombre;
+			form.apellidoEditPersonal.value = apellido;
+			form.correoEditPersonal.value =correo;
+			form.telefonoEditPersonal.value = telefono;
+			form.tipoEditPersonal.value = tipo;
+			
+			
+		},
+		btneditarpersonal:function(e){
+			e.preventDefault();
+			var form = document.getElementById("editarpersonal");
+			rut= form.rutEditPersonal.value;
+			nombre = form.nombreEditPersonal.value;
+			apellido = form.apellidoEditPersonal.value;
+			correo = form.correoEditPersonal.value;
+			telefono = form.telefonoEditPersonal.value;
+			tipo = form.tipoEditPersonal.value;
+			data={
+				rut:rut,
+				nombre:nombre,
+				apellido:apellido,
+				correo:correo,
+				telefono:telefono,
+				tipo:tipo
+			}
+			this.$http.post(index.url + "editarPersonal", data).then(function (r) {
+				var result = r.body;
+				$('#conEditarPe').modal('hide');
+			
+				mensaje(result.msg,2000);
+			})
 		},
 		cargarPersonal: function () {
 			this.$http.get(index.url + "personal").then(function (r) {
@@ -285,10 +324,10 @@ var buscarProducto = new Vue({
 			form.precioupProducto.value = precio;
 			form.stockupProducto.value = stock;
 			form.descupProducto.value = descripcion;
-			var cate= document.getElementById("categoriaEditar");
+			var cate = document.getElementById("categoriaEditar");
 			var array = [].slice.call([cate.children][0]);
 			var p = array.indexOf(array.filter(opt => opt.text == categoria)[0]);
-			cate.selectedIndex=p;
+			cate.selectedIndex = p;
 			this.codigo = codigo;
 		},
 		btneditarPro: function (e) {
@@ -363,17 +402,7 @@ var productoimg = new Vue({
 		producto: []
 	},
 	methods: {
-		btneliminarPro: function (e, codigo) {
-			e.preventDefault();
-			data = {
-				codigo: codigo
-			}
-			this.$http.post(index.url + "deleteProduct", data).then(function (r) {
-				var result = r.body;
-				this.cargarproductos();
-
-			})
-		},
+	
 		cargarproductos: function () {
 			this.$http.get(index.url + "getProducto").then(function (r) {
 				var result = r.body;
@@ -388,3 +417,196 @@ var productoimg = new Vue({
 
 	}
 });
+
+var mostrarCategoria = new Vue({
+	el: "#Categoriaform",
+	data: {
+		categoria: [],
+		id:""
+	},
+	methods: {
+		agregarCategoria: function (e) {
+			e.preventDefault();
+			form = e.target;
+			nombre = form.nameCateAdd.value;
+			data = {
+				nombre: nombre
+			}
+			this.$http.post(index.url + "addCategoria", data).then(function (r) {
+				var result = r.body;
+				form.reset;
+				mensaje(result.msg, 3000);
+				this.mostrarCategoria();
+			})
+		},
+		mostrarCategoria: function () {
+			this.$http.get(index.url + "getCategoria").then(function (r) {
+				var result = r.body;
+				this.categoria = result;
+
+			})
+		},
+		abrirModalEliminarcat: function (e, id) {
+			document.getElementById("modalEliminarcat1").categoria = id;
+			
+		},
+		modalEliminarCat: function (e) {
+			e.preventDefault();
+			data = {
+				id:e.target.categoria
+			}
+			
+			this.$http.post(index.url + "deleteCategoria",data).then(function (r) {
+				var result = r.body;
+				mensaje(result.msg, 2000);
+				$('#conEliminarCat').modal('hide');
+				this.mostrarCategoria();
+			
+			})
+		},
+		abrirModalEditarCat:function(e,id,nombre){
+		var form = document.getElementById("editarCategoria");
+		form.nombrecategoria.value = nombre;
+		this.id= id;
+	},
+	btneditarcate:function(){
+		var form = document.getElementById("editarCategoria");
+		nombre= form.nombrecategoria.value;
+		data={
+			nombre:nombre,
+			id:this.id
+		}
+		
+		this.$http.post(index.url+"updateCategoria",data).then(function(r){
+		 var result = r.body;
+		 mensaje(result.msg,2000);
+		 $('#conEditarCate').modal('hide');
+		 this.mostrarCategoria();
+		 
+		})
+	}
+
+
+	},
+	mounted: function () {
+		this.mostrarCategoria();
+		
+	},
+})
+	// funciones del Cliente
+	
+	var inicioClient = new Vue({
+		el: "#imgProductosClientes",
+		data: {
+			producto: []
+		},
+		methods: {
+		
+			cargarproductos: function () {
+				this.$http.get(index.url + "getProducto").then(function (r) {
+					var result = r.body;
+					this.producto = result;
+	
+	
+				});
+			}
+		},
+		mounted: function () {
+			this.cargarproductos();
+	
+		}
+	});
+// funciones del navbar cliente
+	var headCliente = new Vue({
+		el: "#headCliente",
+		data: {
+			carrito: {
+				total: 0,
+				productos: [],
+				cantidad:0
+			},
+		},
+		methods: {
+			mostrarMensaje: function (e) {
+				e.preventDefault();
+				mensaje("esta es mi segundo intento", 3000);
+			},
+			agregarCarritoCliente: function (codigo, nombre, precio, descripcion) {
+				data = {
+					codigo: codigo,
+					nombre: nombre,
+					precio: precio,
+					descripcion: descripcion
+				}
+			
+				this.carrito.total += parseInt(precio);
+				this.carrito.productos.push(data);
+				this.carrito.cantidad +=parseInt(this.cantidad++);
+				sessionStorage.setItem("carritoCliente", JSON.stringify(this.carrito));
+	
+			}
+		},
+		mounted: function () {
+			if (sessionStorage.getItem("carritoCliente") != null) {
+				this.carrito = JSON.parse(sessionStorage.getItem("carritoCliente"));
+				
+			}
+		}
+	});
+	// funciones del carrito de compras del navbar
+	var listaCarroCliente = new Vue({
+		el: "#listaCarroCliente",
+		methods: {
+			eliminardelcarroCiente: function (e,codigo,precio) {
+				pos = 0;
+				headCliente.carrito.productos.forEach(p => {
+					if (p.codigo == codigo) {
+						headCliente.carrito.productos.splice(pos, 1);
+						headCliente.carrito.total -= parseInt(precio);
+					}
+					pos++;
+				});
+				sessionStorage.setItem("carritoCliente", JSON.stringify(headCliente.carrito));
+			},
+			enviarOrden:function(e){
+				e.preventDefault();
+				var mesa = document.getElementById("numeroMesa").value;
+				data={
+					idmesa:mesa,
+					total:headCliente.carrito.total,
+					cliente:"invitado",
+					productos:headCliente.carrito.productos
+				}
+				
+				this.$http.post(index.url+"addOrden",data).then(function(r){
+					var result = r.body;
+				//	mensaje(result.msg,2000);
+					console.log(r);
+				})
+			}
+		}
+	})
+
+	var mostrarPedido = new Vue({
+		el:"#mostrarPedidos",
+		data :{
+			pedidos:[]
+		},
+		methods:{
+				mostrarPedidos:function(e){
+					$('.collapse').collapse()
+					this.$http.get(index.url+"pedido").then(function(r){
+						var result = r.body;
+						this.pedidos = result;
+						
+						console.log(this.pedidos)
+					})
+				}
+				
+		},
+		mounted:function(){
+			this.mostrarPedidos();
+		}
+	});
+	
+
