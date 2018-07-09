@@ -1,32 +1,33 @@
 <div class="row" id="mostrarPedidos">
-	<div class="container well">
+	<div class="container ">
 		<div class="col-md-8">
 <div id="accordion" >
-	<div class="card-body" >
+	<div class="card-body well" v-for="p in pedidos" v-if="p.productos.length > 0" >
 		<div class="card-header" id="headingone">
 			<h5 class="mb-0">
-				<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseone" aria-expanded="false" aria-controls="collapseone">
-					pedido mesa <b>N°{{pedidos.idMesa}}</b>
+				<button class="btn  collapsed" data-toggle="collapse" :data-target="'#collapseone'+p.datos.idorden" aria-expanded="false" aria-controls="collapseone">
+					orden {{p.datos.idorden}} 
 				</button>
 			</h5>
 		</div>
-		<div id="collapseone" class="collapse" aria-labelledby="headingone" data-parent="#accordion">
+		<div :id="'collapseone'+p.datos.idorden" class="collapse" aria-labelledby="headingone" data-parent="#accordion">
 			<div class="card-body">
+			<p>total: <b>$</b>{{p.datos.precio}}</p>
+			<p> mesa: {{p.datos.idMesa}}</p>
       <table class="table table-bordered">
 				<thead class="">
 					<tr>
-						<td>mesa</td>
-						<td>N° orden</td>
-						<td style="width:200px;">Producto</td>
+						<td>codigo</td>
+						<td>nombre</td>
 						<td>precio</td>
+						
 					</tr>
 				</thead>
-				<tbody  v-for="p in pedidos">
-					<tr >
-						<td >{{p.idMesa}}</td>
-						<td>{{p.idorden}}</td>
-						<td>{{p.nombre}}</td>
-            <td>{{p.precio}}</td>
+				<tbody  >
+					<tr v-for="productos in p.productos">
+					<td>{{productos.codigo}}</td>
+					<td>{{productos.nombre}}</td>
+					<td>{{productos.precio}}</td>
 					</tr>
 				</tbody>
 			</table>

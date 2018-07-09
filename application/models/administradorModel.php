@@ -26,9 +26,9 @@
 	}
 	public function editarPersonal($rut,$nombre,$apellido,$correo,$telefono,$tipo)
 	{
-		$data=array("rut"=>$rut,"nombre"=>$nombre,"apellido","correo"=>$correo,"telefono"=>$telefono,"tipo"=>$tipo);
+		$data=array("rut"=>$rut,"nombre"=>$nombre,"apellido"=>$apellido,"correo"=>$correo,"telefono"=>$telefono,"tipo"=>$tipo);
 		$this->db->where("rut",$rut);
-		return $this->db->insert("personal",$data);
+		return $this->db->update("personal",$data);
 	}
 
 	public function deletePersonal($rut)
@@ -100,8 +100,32 @@
 		$this->db->join("producto","producto.codigo = detalleorden.idCodigo");
 		return $this->db->get()->result();
 	}
+	public function mostrarOrden()
+	{
+		return $this->db->get("orden")->result();
+	}
+	public function buscarProducto($codigo)
+        {
+            $this->db->where("codigo",$codigo);
+            return $this->db->get("producto")->result();
+        }
 
 
+	public function buscarMesa($idmesa)
+        {
+            $this->db->where("id",$idmesa);
+            return $this->db->get("mesa")->result();
+				}
+				
+				public function getProductosPorOrden($idorden)
+				{
+					$this->db->select("*");
+					$this->db->from("producto");
+					$this->db->join("detalleorden","detalleorden.idCodigo = producto.codigo");
+					$this->db->where("detalleorden.idOrden",$idorden);
+				return	$this->db->get()->result();
+
+				}
 
 
 

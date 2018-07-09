@@ -169,7 +169,7 @@ var inicioAdmin = new Vue({
 			this.$http.post(index.url + "editarPersonal", data).then(function (r) {
 				var result = r.body;
 				$('#conEditarPe').modal('hide');
-			
+				this.cargarPersonal();
 				mensaje(result.msg,2000);
 			})
 		},
@@ -177,6 +177,7 @@ var inicioAdmin = new Vue({
 			this.$http.get(index.url + "personal").then(function (r) {
 				var result = r.body;
 				this.arreglo = result;
+
 			})
 		}
 	},
@@ -581,7 +582,7 @@ var mostrarCategoria = new Vue({
 				this.$http.post(index.url+"addOrden",data).then(function(r){
 					var result = r.body;
 				//	mensaje(result.msg,2000);
-					console.log(r);
+					mensaje(result.msg,2000);
 				})
 			}
 		}
@@ -595,11 +596,11 @@ var mostrarCategoria = new Vue({
 		methods:{
 				mostrarPedidos:function(e){
 					$('.collapse').collapse()
-					this.$http.get(index.url+"pedido").then(function(r){
+					this.$http.get(index.url+"getProductosPorOrden").then(function(r){
 						var result = r.body;
 						this.pedidos = result;
 						
-						console.log(this.pedidos)
+						console.log(result)
 					})
 				}
 				

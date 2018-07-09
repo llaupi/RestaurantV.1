@@ -99,6 +99,7 @@
 							<select class="form-control" name="tipoEditPersonal" id="tipoEditPersonal">
 								<option value="0">administrador</option>
 								<option value="1">Vendedor</option>
+								<option value="2">Cliente</option>
 							</select>
             </div>
 					

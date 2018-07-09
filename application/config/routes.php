@@ -76,6 +76,15 @@ $route['unirCategoria'] = 'administrador/unirCategoria';
 $route['actualizarProducto'] = 'administrador/actualizarProducto';
 $route['modulocategoria'] = 'administrador/modulocategoria';
 $route['modulopedidos'] = 'administrador/modulopedidos';
+$route['mostrarOrden'] = 'administrador/mostrarOrden';
+
+// productos
+$route['buscarProducto'] = 'administrador/buscarProducto';
+
+//mesa
+$route['buscarMesa'] = 'administrador/buscarMesa';
+
+
 
 $route['addCategoria'] = 'administrador/addCategoria';
 $route['deleteCategoria'] = 'administrador/deleteCategoria';
@@ -85,6 +94,9 @@ $route['updateCategoria'] = 'administrador/updateCategoria';
 // rutas de orden  y compra
 $route['addOrden'] = 'administrador/addOrden';
 $route['pedido'] = 'administrador/pedido';
+$route['getProductosPorOrden'] = 'administrador/getProductosPorOrden';
+
+
 
 // rutas clientes
 $route['inicioCliente'] = 'Cliente/inicioCliente';

@@ -36,8 +36,6 @@ class Cliente extends CI_Controller {
 		$this->load->view('templateCliente/header');
 		$this->load->view('cliente/ListaCarroCliente');
 		$this->load->view('templateCliente/footer');
-
-	
 	}
 	
 	

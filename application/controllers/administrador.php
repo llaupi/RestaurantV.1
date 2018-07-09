@@ -175,19 +175,53 @@ class administrador extends CI_Controller {
          $precio = $this->request->total;
          $cliente = $this->request->cliente;
          $productos = $this->request->productos;
-          $ultimaId = $this->administradorModel->addOrden($idmesa,$fecha,$precio,$cliente)[0]->ultima;
-        
-       foreach ($productos as $prod) {
+          $cantidad = sizeof($this->administradorModel->buscarMesa($idmesa));
+          if ($cantidad>0) {
+            $ultimaId = $this->administradorModel->addOrden($idmesa,$fecha,$precio,$cliente)[0]->ultima;
+              foreach ($productos as $prod) {
         $this->administradorModel->detalleOrden($ultimaId,$prod->codigo);
        }
        echo json_encode(array("msg"=>"ay"));
         
+          } else {
+              echo json_encode(array("msg"=>"mesa no encontrada"));
+          }
+          
+       
      }
 
      public function pedido()
      {
         echo json_encode($this->administradorModel->pedido());
      }
+     public function mostrarOrden()
+    {
+        echo json_encode($this->administradorModel->mostrarOrden());
+        }
+
+        public function buscarProducto()
+        {
+            $codigo = $this->request->codigo;
+            echo json_encode($this->administradorModel->buscarProducto($codigo));
+        }
+        public function buscarMesa()
+        {
+            $id = $this->request->codigo;
+            echo json_encode($this->administradorModel->buscarMesa($id));
+        }
+
+
+        public function getProductosPorOrden()
+        {
+            $ordenes = $this->administradorModel->mostrarOrden();
+            $result=array();
+            foreach ($ordenes as $o) {
+                $p = $this->administradorModel->getProductosPorOrden($o->idorden);
+                $r = array("datos"=>$o,"productos"=>$p);
+                array_push($result,$r);
+            }
+            echo json_encode($result);
+        }
 
 
 
